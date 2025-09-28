@@ -1,0 +1,18 @@
+-- Tabla clientes
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    telefono VARCHAR(200) NOT NULL
+);
+
+-- Tabla de ordenes
+CREATE TABLE ordenes (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT REFERENCES clientes(id) ON DELETE CASCADE,
+    platillo_nombre VARCHAR(200) NOT NULL,
+    notes TEXT,
+    estado VARCHAR(20) DEFAULT 'pending'
+        CHECK (estado IN ('pending', 'in_progress', 'done')),
+    creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
